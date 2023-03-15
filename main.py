@@ -23,8 +23,13 @@ sleep(.5)
 arv_date.click()
 sleep(.5)
 arv_date = driver.find_element(By.ID, "FurthestDate")
+# arv_date.send_keys("06/07/2023")
 sleep(.5)
 arv_date.click()
+
+# stay_len = driver.find_element(By.NAME, "ctl00$ctl00$mainContent$ddlHomeNights")
+# stay_len.send_keys("1")
+# stay_len.send_keys(Keys.RETURN)
 
 sleep(2)
 
@@ -34,7 +39,9 @@ search.click()
 sleep(2)
 
 assert "Search" in driver.title
-check_avail = driver.find_elements(By.LINK_TEXT, "Check Availability")[2]
+# Find the link in the 3rd row of the table
+check_avail = driver.find_element(By.XPATH, '//table//tr[4]//td[2]//a')
+sleep(.5)
 check_avail.click()
 
 sleep(2)
@@ -59,10 +66,10 @@ for recipient in recipients:
         message = f"We checked camping availability at {time} and found:\n" +\
                   "\n".join(availabilities) +\
                   "\n" + camping_url
-        send_message(recipient, "+18886174890", message)
+        send_message(recipient, "+15403860915", message)
     else:
         message = f"We checked camping availability at {time} and found no availabilities! =("
-        send_message(recipient, "+18886174890", message)
+        send_message(recipient, "+15403860915", message)
 
 sleep(5)
 

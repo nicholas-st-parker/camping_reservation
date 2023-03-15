@@ -6,8 +6,10 @@ import re
 from twilio_text import send_message
 from local_time import get_time
 
+camping_url = "https://reservemn.usedirect.com/MinnesotaWeb/"
+
 driver = webdriver.Firefox()
-driver.get("https://reservemn.usedirect.com/MinnesotaWeb/")
+driver.get(camping_url)
 assert "Minnesota" in driver.title
 camp_loc = driver.find_element(By.NAME, "ctl00$ctl00$mainContent$txtSearchparkautocomplete")
 camp_loc.clear()
@@ -23,12 +25,6 @@ sleep(.5)
 arv_date = driver.find_element(By.ID, "FurthestDate")
 sleep(.5)
 arv_date.click()
-sleep(.5)
-# arv_date.send_keys(Keys.RETURN)
-
-stay_len = driver.find_element(By.NAME, "ctl00$ctl00$mainContent$ddlHomeNights")
-stay_len.send_keys("1")
-stay_len.send_keys(Keys.RETURN)
 
 sleep(2)
 
@@ -60,7 +56,9 @@ recipients = ["+17636914403"]  # "+17635682973"
 for recipient in recipients:
     time = get_time()
     if availabilities:
-        message = f"We checked camping availability at {time} and found: \n" + "\n".join(availabilities)
+        message = f"We checked camping availability at {time} and found:\n" +\
+                  "\n".join(availabilities) +\
+                  "\n" + camping_url
         send_message(recipient, "+18886174890", message)
     else:
         message = f"We checked camping availability at {time} and found no availabilities! =("
